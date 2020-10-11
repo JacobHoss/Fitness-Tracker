@@ -27,6 +27,7 @@ app.use(express.json());
 app.use(express.static("public"));
 
 // HTML Routes - - - - - - - - - - - - - -
+
 app.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, "/public/index.html"));
 });
@@ -46,6 +47,15 @@ app.get("api/workouts", (req, res) => {
   db.Workout.find({})
     .then(data => res.json(data))
     .catch(err => res.status(500).send(err))
+});
+
+// Get Route for Stats Page
+app.get("/api/workouts/range", (req, res) => {
+  db.Workout.find({}).then(data => {
+    res.json(data);
+  }).catch(err => {
+    res.status(500).json(err);
+  });
 });
 
 // Update Route
